@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+// @ts-ignore
 import pdf from 'pdf-parse';
 import { OpenAI } from 'openai';
 
@@ -81,7 +82,7 @@ export async function POST(req: Request) {
       
       console.log('OpenAI Response:', content);
 
-      return NextResponse.json(JSON.parse(content));
+      return NextResponse.json(JSON.parse(content || '{}'));
 
     } catch (error) {
       console.error('Processing error:', error);

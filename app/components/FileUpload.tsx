@@ -39,8 +39,11 @@ export default function FileUpload({ onFileSelect }: FileUploadProps) {
 
   return (
     <div
-      className={`relative rounded-xl border-2 border-dashed transition-all duration-200 ease-in-out
-        ${dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50/50'}`}
+      className={`relative rounded-2xl border-2 border-dashed transition-all duration-300 ease-out
+        ${dragActive 
+          ? 'border-accent bg-accent/10 scale-[1.02]' 
+          : 'border-border/50 hover:border-border hover:bg-card-hover'
+        }`}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
@@ -54,31 +57,29 @@ export default function FileUpload({ onFileSelect }: FileUploadProps) {
         onChange={handleChange}
       />
       
-      <div className="flex flex-col items-center justify-center py-12 px-4">
-        <div className="mb-4">
-          <svg
-            className={`w-12 h-12 transition-colors duration-200 ease-in-out
-              ${dragActive ? 'text-blue-500' : 'text-gray-400'}`}
-            stroke="currentColor"
-            fill="none"
-            viewBox="0 0 48 48"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M24 8v24m0-24l-8 8m8-8l8 8m-8 16a16 16 0 110-32 16 16 0 010 32z"
-            />
-          </svg>
-        </div>
-        <p className="text-lg font-medium text-gray-900">
+      <div className="flex flex-col items-center justify-center py-16 px-4">
+        <svg
+          className={`w-14 h-14 mb-4 transition-all duration-300 ease-out
+            ${dragActive ? 'text-accent scale-110' : 'text-muted'}`}
+          stroke="currentColor"
+          fill="none"
+          viewBox="0 0 48 48"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M24 8v24m0-24l-8 8m8-8l8 8m-8 16a16 16 0 110-32 16 16 0 010 32z"
+          />
+        </svg>
+        <p className="text-xl font-medium text-foreground">
           Click to upload or drag and drop
         </p>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-muted">
           PDF, TXT
         </p>
       </div>
     </div>
   );
-} 
+}

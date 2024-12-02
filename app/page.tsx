@@ -6,6 +6,7 @@ import { processDocument } from './services/documentProcessor';
 import { ProcessedContent } from './types/index';
 import CheatSheet from './components/CheatSheet';
 import dynamic from 'next/dynamic';
+import LoadingSpinner from './components/LoadingSpinner';
 
 // Fix the import path to use relative path instead of alias
 const ShareAndExport = dynamic(
@@ -38,36 +39,36 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <main className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center space-y-8 mb-16">
-          <h1 className="text-5xl font-bold text-gray-900 tracking-tight">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent" />
+      <main className="relative max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        <div className="text-center space-y-6 mb-16">
+          <h1 className="text-5xl font-bold text-foreground tracking-tight sm:text-6xl">
             smartdocsummaries
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-muted max-w-2xl mx-auto">
             Upload your documents and get organized summaries
           </p>
         </div>
-
-        <div className="max-w-2xl mx-auto">
+  
+        <div className="max-w-2xl mx-auto backdrop-blur-sm bg-card/20 p-8 rounded-2xl border border-border/40">
           <FileUpload onFileSelect={handleFileSelect} />
-
+  
           {error && (
-            <div className="mt-8 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg text-center">
+            <div className="mt-8 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-center">
               {error}
             </div>
           )}
-
+  
           {isProcessing && (
-            <div className="mt-12 flex flex-col items-center justify-center space-y-4">
-              <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-gray-800"></div>
-              <p className="text-lg text-gray-600">Processing your document...</p>
+            <div className="mt-8 flex flex-col items-center justify-center space-y-4">
+              <LoadingSpinner />
             </div>
           )}
         </div>
-
+  
         {cheatSheet && !isProcessing && (
-          <div className="mt-16">
+          <div className="mt-16 space-y-6">
             <CheatSheet ref={cheatSheetRef} data={cheatSheet} />
             <ShareAndExport 
               contentRef={cheatSheetRef}
@@ -78,4 +79,4 @@ export default function Home() {
       </main>
     </div>
   );
-} 
+}

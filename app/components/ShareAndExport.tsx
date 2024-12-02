@@ -17,7 +17,8 @@ export default function ShareAndExport({ contentRef, fileName }: ShareAndExportP
     setIsExporting(true);
     try {
       // Dynamically import html2pdf only when needed (client-side)
-      const html2pdf = (await import('html2pdf.js')).default;
+      // @ts-ignore
+      const html2pdf = (await import('html2pdf.js')).default as any;
       
       const opt = {
         margin: 1,
