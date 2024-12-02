@@ -1,0 +1,5 @@
+Project Overview
+A web application that allows users to upload PDFs, text files, or notes.
+The app will process the content to generate a concise, structured cheat 
+sheet highlighting key concepts, terms, and summaries. The cheat sheet will 
+be organized in a clear and visually appealing layout.
