@@ -2,7 +2,8 @@
 
 import { useState, useRef } from 'react';
 import FileUpload from './components/FileUpload';
-import { processDocument, ProcessedContent } from './services/documentProcessor';
+import { processDocument } from './services/documentProcessor';
+import { ProcessedContent } from './types/index';
 import CheatSheet from './components/CheatSheet';
 import dynamic from 'next/dynamic';
 
@@ -41,7 +42,7 @@ export default function Home() {
       <main className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <div className="text-center space-y-8 mb-16">
           <h1 className="text-5xl font-bold text-gray-900 tracking-tight">
-            Cheat Sheet Generator
+            smartdocsummaries
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Upload your documents and get organized summaries

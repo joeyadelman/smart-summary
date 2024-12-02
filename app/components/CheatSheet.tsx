@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { ProcessedContent } from '../types';
+import { ProcessedContent } from '../types/index';
 
 interface CheatSheetProps {
   data: ProcessedContent;
