@@ -97,7 +97,7 @@ The application can be configured through various environment variables and sett
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+Please follow these steps for contributing:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -108,12 +108,6 @@ Contributions are welcome! Please follow these steps:
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- OpenAI for GPT-4 API
-- Next.js team for the amazing framework
-- Contributors and maintainers
 
 ## 🔮 Future Enhancements
 
@@ -136,14 +130,5 @@ This project uses:
 - [Next.js Documentation](https://nextjs.org/docs)
 - [OpenAI API Documentation](https://platform.openai.com/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-
-## 🚀 Deployment
-
-The easiest way to deploy this application is using [Vercel](https://vercel.com):
-
-1. Push your code to a GitHub repository
-2. Import your project into Vercel
-3. Add your environment variables
-4. Deploy!
 
 For more detailed technical documentation, please refer to the individual component files and API documentation.

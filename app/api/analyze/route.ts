@@ -29,13 +29,23 @@ export async function POST(req: Request) {
         const buffer = Buffer.from(arrayBuffer);
         const data = await pdf(buffer);
         textContent = data.text;
+        
+        console.log('Extracted PDF Content Length:', textContent.length);
+        console.log('First 500 characters:', textContent.substring(0, 500));
+        console.log('Last 500 characters:', textContent.substring(textContent.length - 500));
+        
       } else if (file.type === 'text/plain') {
         textContent = await file.text();
+        
+        console.log('Text File Content Length:', textContent.length);
+        console.log('First 500 characters:', textContent.substring(0, 500));
+        console.log('Last 500 characters:', textContent.substring(textContent.length - 500));
       } else {
         throw new Error('Unsupported file type');
       }
 
-      // Send to OpenAI for analysis
+      console.log('Sending to OpenAI - Content Length:', textContent.length);
+
       const response = await openai.chat.completions.create({
         model: "gpt-4-turbo-preview",
         messages: [
@@ -69,9 +79,7 @@ export async function POST(req: Request) {
 
       const content = response.choices[0].message.content;
       
-      if (!content) {
-        throw new Error('No content received from OpenAI');
-      }
+      console.log('OpenAI Response:', content);
 
       return NextResponse.json(JSON.parse(content));
 

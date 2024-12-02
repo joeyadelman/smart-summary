@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import html2pdf from 'html2pdf.js';
+import dynamic from 'next/dynamic';
 
 interface ShareAndExportProps {
   contentRef: React.RefObject<HTMLDivElement>;
@@ -16,6 +16,9 @@ export default function ShareAndExport({ contentRef, fileName }: ShareAndExportP
     
     setIsExporting(true);
     try {
+      // Dynamically import html2pdf only when needed (client-side)
+      const html2pdf = (await import('html2pdf.js')).default;
+      
       const opt = {
         margin: 1,
         filename: `${fileName.replace(/\.[^/.]+$/, '')}_summary.pdf`,
@@ -33,6 +36,9 @@ export default function ShareAndExport({ contentRef, fileName }: ShareAndExportP
   };
 
   const handleShare = async () => {
+    // Check if we're in the browser
+    if (typeof window === 'undefined') return;
+
     try {
       if (navigator.share) {
         await navigator.share({

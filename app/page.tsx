@@ -4,7 +4,13 @@ import { useState, useRef } from 'react';
 import FileUpload from './components/FileUpload';
 import { processDocument, ProcessedContent } from './services/documentProcessor';
 import CheatSheet from './components/CheatSheet';
-import ShareAndExport from './components/ShareAndExport';
+import dynamic from 'next/dynamic';
+
+// Fix the import path to use relative path instead of alias
+const ShareAndExport = dynamic(
+  () => import('./components/ShareAndExport'),
+  { ssr: false }
+);
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
