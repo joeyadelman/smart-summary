@@ -15,6 +15,7 @@ const ShareAndExport = dynamic(
 );
 
 export default function Home() {
+  // Group related state together
   const [file, setFile] = useState<File | null>(null);
   const [cheatSheet, setCheatSheet] = useState<ProcessedContent | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -39,41 +40,57 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent" />
-      <main className="relative max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center space-y-6 mb-16">
-          <h1 className="text-5xl font-bold text-foreground tracking-tight sm:text-6xl">
-            smartdocsummaries
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-blue-500/10 to-transparent blur-2xl transform rotate-12 animate-pulse" />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-purple-500/10 to-transparent blur-2xl transform -rotate-12 animate-pulse delay-1000" />
+      </div>
+
+      <main className="relative max-w-6xl mx-auto px-4 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-6 tracking-tight">
+            Smart Document Summaries
           </h1>
-          <p className="text-lg text-muted max-w-2xl mx-auto">
-            Upload your documents and get organized summaries
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+            Transform your documents into intelligent, organized summaries in seconds
           </p>
         </div>
-  
-        <div className="max-w-2xl mx-auto backdrop-blur-sm bg-card/20 p-8 rounded-2xl border border-border/40">
-          <FileUpload onFileSelect={handleFileSelect} />
-  
-          {error && (
-            <div className="mt-8 p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-center">
-              {error}
-            </div>
-          )}
-  
-          {isProcessing && (
-            <div className="mt-8 flex flex-col items-center justify-center space-y-4">
-              <LoadingSpinner />
-            </div>
-          )}
+
+        {/* Upload Card */}
+        <div className="relative max-w-2xl mx-auto">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl" />
+          <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
+            <FileUpload onFileSelect={handleFileSelect} />
+            
+            {error && (
+              <div className="mt-6 bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl backdrop-blur-sm animate-fadeIn">
+                {error}
+              </div>
+            )}
+
+            {isProcessing && (
+              <div className="mt-6 flex justify-center">
+                <div className="flex items-center gap-3 text-slate-300">
+                  <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  Processing your document...
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-  
+
+        {/* Results Section */}
         {cheatSheet && !isProcessing && (
-          <div className="mt-16 space-y-6">
+          <div className="mt-20 animate-fadeInUp">
             <CheatSheet ref={cheatSheetRef} data={cheatSheet} />
-            <ShareAndExport 
-              contentRef={cheatSheetRef}
-              fileName={file?.name || 'document'}
-            />
+            <div className="mt-8">
+              <ShareAndExport 
+                contentRef={cheatSheetRef}
+                fileName={file?.name || 'document'}
+              />
+            </div>
           </div>
         )}
       </main>
