@@ -2,6 +2,8 @@
 
 maybe this website: smartdocsummaries.com
 
+<!-- need to do auto refreh of sidebar -->
+
 A powerful web application that transforms documents into organized, easy-to-understand cheat sheets using AI and natural language processing.
 
 ## 🚀 Features

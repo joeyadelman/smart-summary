@@ -7,6 +7,9 @@ import { ProcessedContent } from './types/index';
 import CheatSheet from './components/CheatSheet';
 import dynamic from 'next/dynamic';
 import LoadingSpinner from './components/LoadingSpinner';
+import SummaryList from './components/SummaryList';
+import { useSummaries } from '@/app/hooks/useSummaries';
+import Sidebar from './components/Sidebar';
 
 // Fix the import path to use relative path instead of alias
 const ShareAndExport = dynamic(
@@ -15,12 +18,12 @@ const ShareAndExport = dynamic(
 );
 
 export default function Home() {
-  // Group related state together
   const [file, setFile] = useState<File | null>(null);
   const [cheatSheet, setCheatSheet] = useState<ProcessedContent | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const cheatSheetRef = useRef<HTMLDivElement>(null);
+  const { fetchSummaries, addSummary } = useSummaries();
 
   const handleFileSelect = async (selectedFile: File) => {
     setFile(selectedFile);
@@ -31,6 +34,15 @@ export default function Home() {
     try {
       const result = await processDocument(selectedFile);
       setCheatSheet(result);
+      
+      // Add the new summary directly to the sidebar
+      const newSummary = {
+        id: crypto.randomUUID(),
+        document_name: selectedFile.name,
+        content: result,
+        created_at: new Date().toISOString()
+      };
+      addSummary(newSummary);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred while processing the file');
       console.error('Error processing file:', err);
@@ -39,14 +51,18 @@ export default function Home() {
     }
   };
 
+  const handleSummarySelect = (content: ProcessedContent) => {
+    setCheatSheet(content);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-blue-500/10 to-transparent blur-2xl transform rotate-12 animate-pulse" />
         <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-purple-500/10 to-transparent blur-2xl transform -rotate-12 animate-pulse delay-1000" />
       </div>
 
+      <Sidebar onSummarySelect={handleSummarySelect} />
       <main className="relative max-w-6xl mx-auto px-4 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -89,6 +105,7 @@ export default function Home() {
               <ShareAndExport 
                 contentRef={cheatSheetRef}
                 fileName={file?.name || 'document'}
+                data={cheatSheet}
               />
             </div>
           </div>

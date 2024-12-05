@@ -1,3 +1,5 @@
+import { supabase } from '@/lib/supabase';
+
 export async function processDocument(file: File): Promise<any> {
   try {
     const formData = new FormData();

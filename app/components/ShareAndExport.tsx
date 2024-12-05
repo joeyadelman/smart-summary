@@ -2,14 +2,67 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import { ProcessedContent } from '../types';
 
 interface ShareAndExportProps {
   contentRef: React.RefObject<HTMLDivElement>;
   fileName: string;
+  data: ProcessedContent;
 }
 
-export default function ShareAndExport({ contentRef, fileName }: ShareAndExportProps) {
+export default function ShareAndExport({ contentRef, fileName, data }: ShareAndExportProps) {
   const [isExporting, setIsExporting] = useState(false);
+  const [isCopying, setIsCopying] = useState(false);
+
+  const formatContentForClipboard = (content: ProcessedContent): string => {
+    const { summary, keyTerms, mainConcepts, keyPoints } = content;
+    
+    return `
+DOCUMENT SUMMARY
+===============
+
+${summary}
+
+
+KEY TERMS
+=========
+${keyTerms.map(({ term, explanation }) => 
+  `${term.toUpperCase()}
+  ${explanation}
+`).join('\n')}
+
+
+MAIN CONCEPTS
+============
+${mainConcepts.map(({ title, description }, index) => 
+  `${index + 1}. ${title.toUpperCase()}
+   ${description}
+`).join('\n\n')}
+
+
+KEY POINTS
+==========
+${keyPoints.map((point, index) => 
+  `${index + 1}. ${point}`
+).join('\n\n')}
+`;
+  };
+
+  const handleCopyToClipboard = async () => {
+    if (!data) return;
+    
+    setIsCopying(true);
+    try {
+      const formattedText = formatContentForClipboard(data);
+      await navigator.clipboard.writeText(formattedText);
+      alert('Content copied to clipboard!');
+    } catch (error) {
+      console.error('Error copying to clipboard:', error);
+      alert('Failed to copy content');
+    } finally {
+      setIsCopying(false);
+    }
+  };
 
   const handleExportPDF = async () => {
     if (!contentRef.current) return;
@@ -58,6 +111,26 @@ export default function ShareAndExport({ contentRef, fileName }: ShareAndExportP
 
   return (
     <div className="flex gap-4 justify-center mt-8">
+      <button
+        onClick={handleCopyToClipboard}
+        disabled={isCopying}
+        className="flex items-center px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:bg-purple-300 transition-colors"
+      >
+        {isCopying ? (
+          <>
+            <LoadingIcon className="animate-spin -ml-1 mr-2 h-5 w-5" />
+            Copying...
+          </>
+        ) : (
+          <>
+            <svg className="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-2M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+            Copy Text
+          </>
+        )}
+      </button>
+
       <button
         onClick={handleExportPDF}
         disabled={isExporting}
