@@ -1,136 +1,76 @@
-# Cheat Sheet Generator
+# Smart Document Summaries
 
-maybe this website: smartdocsummaries.com
-
-<!-- need to do auto refreh of sidebar -->
-
-A powerful web application that transforms documents into organized, easy-to-understand cheat sheets using AI and natural language processing.
+A powerful web application that transforms documents into intelligent, organized summaries using AI. The application processes documents differently based on their type (Academic Papers, Resumes, or General Documents) to provide the most relevant analysis.
 
 ## 🚀 Features
 
-- **Smart Document Processing**: Upload PDFs or text files for instant analysis
-- **AI-Powered Summaries**: Leverages GPT-4 for intelligent content extraction
-- **Structured Output**: Organizes information into:
+- **Smart Document Processing**: Upload PDFs or text files for instant AI-powered analysis
+- **Document Type Specialization**: 
+  - Academic Papers: Focuses on research components, methodology, and findings
+  - Resumes: Analyzes professional experience, skills, and qualifications
+  - General Documents: Provides comprehensive content summaries
+- **Structured Output**:
   - Key Terms & Definitions
   - Main Concepts
   - Key Points
-  - Comprehensive Summary
-- **Clean, Modern UI**: Responsive design with smooth interactions
-- **Real-time Processing**: Instant feedback with loading states
+  - Numerical Data
+  - Document-specific insights
 
-## 🛠️ Technology Stack
+## 💡 How It Works
 
-- **Frontend**: Next.js 15.0 with React
-- **Styling**: Tailwind CSS
-- **PDF Processing**: pdf-parse
-- **AI Integration**: OpenAI GPT-4 API
-- **Type Safety**: TypeScript
+1. **Select Document Type**
+   - Choose between Academic Paper, Resume, or General Document
+   - Each type uses specialized AI prompts for optimal analysis
+
+2. **Upload Document**
+   - Drag & drop or click to upload
+   - Supports PDF and text files
+
+3. **AI Processing**
+   - Document is analyzed using advanced AI
+   - Content is structured based on document type
+   - Key information is extracted and organized
+
+4. **View & Share**
+   - Clean, organized layout
+   - Interactive key terms highlighting
+   - Easy sharing and export options
+   - Access to previous summaries
+
+## 🔧 Technical Stack
+
+- Next.js 13+ with App Router
+- TypeScript for type safety
+- Supabase for backend & authentication
+- Tailwind CSS for styling
+- GPT-4 for document analysis
 
 ## 🚀 Getting Started
 
-1. **Clone and Install**
+1. Clone the repository
+2. Install dependencies:
    ```bash
-   git clone <repository-url>
-   cd cheat-sheet-generator
    npm install
    ```
-
-2. **Environment Setup**
-   Create a `.env.local` file:
-   ```env
-   OPENAI_API_KEY=your_api_key_here
+3. Set up environment variables:
+   ```bash
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
+   OPENAI_API_KEY=your_openai_key
    ```
-
-3. **Run Development Server**
+4. Run the development server:
    ```bash
    npm run dev
    ```
 
-4. Open `http://localhost:3000` in your browser
+## 📋 Future Enhancements
 
-## 📋 How It Works
-
-### 1. Document Upload
-Users can upload documents through a drag-and-drop interface or file selector. The application supports:
-- PDF files
-- Text files
-
-### 2. Processing Pipeline
-
-1. **Document Parsing**:
-   - PDFs are converted to text using pdf-parse
-   - Text is extracted and cleaned for processing
-
-2. **AI Analysis**:
-   - Content is sent to GPT-4 for intelligent analysis
-   - The AI structures the information into predefined categories
-
-3. **Data Organization**:
-   The processed content is structured into:
-   ```typescript
-   interface ProcessedContent {
-     keyTerms: { term: string; explanation: string }[];
-     mainConcepts: { title: string; description: string }[];
-     keyPoints: string[];
-     summary: string;
-   }
-   ```
-
-### 3. Output Rendering
-The processed content is displayed in a clean, organized layout with sections for:
-- Summary overview
-- Key terms with explanations
-- Main concepts with detailed descriptions
-- Important key points
-
-## 🔧 Configuration
-
-The application can be configured through various environment variables and settings:
-- OpenAI API configuration
-- PDF processing options
-- UI customization through Tailwind
-
-## 🎯 Use Cases
-
-- **Students**: Create study guides from lecture notes
-- **Professionals**: Summarize technical documentation
-- **Researchers**: Extract key points from academic papers
-- **Writers**: Organize and summarize research materials
-
-## 🤝 Contributing
-
-Please follow these steps for contributing:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- Additional document type specializations
+- Enhanced export options
+- Collaborative features
+- Custom AI analysis parameters
+- Advanced sharing capabilities
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🔮 Future Enhancements
-
-- Support for more file formats
-- Enhanced AI analysis options
-- Collaborative features
-- Export options (PDF, Markdown)
-- Custom styling templates
-
-## 🛠️ Development
-
-This project uses:
-- [Next.js](https://nextjs.org/) - React framework
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [OpenAI API](https://openai.com/api/) - AI processing
-- [pdf-parse](https://www.npmjs.com/package/pdf-parse) - PDF processing
-
-## 💡 Learn More
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [OpenAI API Documentation](https://platform.openai.com/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-
-For more detailed technical documentation, please refer to the individual component files and API documentation.
