@@ -12,12 +12,11 @@ Below is an outline of potential improvements to your existing product, along wi
 - **Modular Content Organization: (DONE)** Use collapsible sections for different parts of the summary to reduce information overload.
 
 ### b. Expanded Document Type Coverage
-- **Additional Document Types:** Add specialized analysis modes (e.g., legal contracts, marketing reports, product manuals).
+- **Additional Document Types: (DONE)** Add specialized analysis modes (e.g., legal contracts, marketing reports, product manuals).
 - **Language Support:** Begin working towards multilingual processing to cater to international users.
 
 ### c. Better Accuracy and Context
 - **Adjustable Summary Depth:** Let users choose brief, medium, or in-depth summaries.
-- **Enhanced AI Prompts:** Refine prompts for more accurate, context-rich outputs.
 - **User Feedback Loop:** Include a rating or feedback mechanism to continually improve the AI model’s performance.
 
 ### d. Integrations and Export Options
