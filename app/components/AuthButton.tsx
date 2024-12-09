@@ -32,11 +32,19 @@ export default function AuthButton() {
 
     try {
       if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
+        const { error: signUpError, data: signUpData } = await supabase.auth.signUp({
           email,
           password,
         });
-        if (error) throw error;
+        if (signUpError) throw signUpError;
+
+        if (signUpData.user) {
+          const { error: signInError } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+          if (signInError) throw signInError;
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
