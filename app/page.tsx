@@ -10,6 +10,8 @@ import LoadingSpinner from './components/LoadingSpinner';
 import SummaryList from './components/SummaryList';
 import { useSummaries } from '@/app/hooks/useSummaries';
 import Sidebar from './components/Sidebar';
+import DocumentTypeSelector from './components/DocumentTypeSelector';
+import { DocumentType } from './types';
 
 // Fix the import path to use relative path instead of alias
 const ShareAndExport = dynamic(
@@ -25,6 +27,7 @@ export default function Home() {
   const cheatSheetRef = useRef<HTMLDivElement>(null);
   const { fetchSummaries, addSummary } = useSummaries();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [documentType, setDocumentType] = useState<DocumentType>('general');
 
   const handleFileSelect = async (selectedFile: File) => {
     setFile(selectedFile);
@@ -33,7 +36,11 @@ export default function Home() {
     setCheatSheet(null);
 
     try {
-      const result = await processDocument(selectedFile);
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('documentType', documentType);
+      
+      const result = await processDocument(formData);
       setCheatSheet(result);
       
       // Add the new summary directly to the sidebar
@@ -87,6 +94,10 @@ export default function Home() {
           <div className="relative max-w-2xl mx-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl" />
             <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
+              <DocumentTypeSelector 
+                selectedType={documentType}
+                onTypeSelect={setDocumentType}
+              />
               <FileUpload onFileSelect={handleFileSelect} />
               
               {error && (

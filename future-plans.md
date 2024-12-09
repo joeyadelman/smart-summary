@@ -8,7 +8,6 @@ Below is an outline of potential improvements to your existing product, along wi
 
 ### a. User Experience & Interface
 - **More Intuitive Workflow:** Include progress indicators, loading animations, and clearer instructions during file upload and analysis.
-- **Keyword Search and Filtering:** Allow users to quickly search for terms within the summary.
 - **Interactive Highlighting:** Hovering over key terms could reveal definitions or related context.
 - **Modular Content Organization: (DONE)** Use collapsible sections for different parts of the summary to reduce information overload.
 

@@ -1,11 +1,8 @@
 import { supabase } from '@/lib/supabase';
 
-export async function processDocument(file: File): Promise<any> {
+export async function processDocument(formData: FormData): Promise<any> {
   try {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    console.log('Sending file for analysis:', file.name, file.type);
+    console.log('Sending file for analysis:', formData.get('file'));
 
     const response = await fetch('/api/analyze', {
       method: 'POST',

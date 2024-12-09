@@ -20,4 +20,13 @@ export interface NumericalFinding {
   value: string;
   context: string;
   significance: string;
+}
+
+export type DocumentType = 'general' | 'academic' | 'legal' | 'marketing';
+
+export interface DocumentTypeConfig {
+  id: DocumentType;
+  label: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
 } 

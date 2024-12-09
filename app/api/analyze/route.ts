@@ -4,15 +4,70 @@ import pdf from 'pdf-parse';
 import { OpenAI } from 'openai';
 import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
+import { DocumentType } from '@/app/types';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
 });
 
+function getPromptForDocumentType(documentType: DocumentType, textContent: string) {
+  const basePrompt = `Analyze the following document and structure the information into these categories:
+
+1. Summary: A concise overview of the main points
+2. Key Terms: Important terminology with explanations
+3. Main Concepts: Core ideas and their descriptions
+4. Key Points: Bullet points of crucial information
+5. Numerical Data: Extract and explain significant statistics, dates, or measurements`;
+
+  const specializedPrompts = {
+    academic: `Analyze this academic paper with focus on:
+- Research methodology
+- Key findings and conclusions
+- Theoretical framework
+- Statistical significance
+- Citations and references
+${basePrompt}`,
+
+    legal: `Analyze this legal document with focus on:
+- Key obligations and rights
+- Important dates and deadlines
+- Liability clauses
+- Definitions and legal terms
+- Conditions and requirements
+${basePrompt}`,
+
+    marketing: `Analyze this marketing report with focus on:
+- Market trends and insights
+- Performance metrics
+- Target audience analysis
+- Competitive analysis
+- ROI and conversion data
+${basePrompt}`,
+
+    general: basePrompt
+  };
+
+  return `${specializedPrompts[documentType]}
+
+Format the response as a JSON object with this structure:
+{
+  "summary": "string",
+  "keyTerms": [{ "term": "string", "explanation": "string" }],
+  "mainConcepts": [{ "title": "string", "description": "string" }],
+  "keyPoints": ["string"],
+  "numericalData": [{ "value": "string", "context": "string", "significance": "string" }]
+}
+
+Document content:
+${textContent}`;
+}
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const file = formData.get('file') as File;
+    const documentType = (formData.get('documentType') as DocumentType) || 'general';
+    console.log('Document Type:', documentType);
     
     if (!file) {
       return NextResponse.json({ 
@@ -49,30 +104,7 @@ export async function POST(req: Request) {
 
       console.log('Sending to OpenAI - Content Length:', textContent.length);
 
-      const prompt = `Analyze the following document and structure the information into these categories:
-
-1. Summary: A concise overview of the main points
-2. Key Terms: Important terminology with explanations
-3. Main Concepts: Core ideas and their descriptions
-4. Key Points: Bullet points of crucial information
-5. Numerical Data: Extract and explain significant statistics, dates, or measurements
-
-For numerical data, include:
-- The actual value
-- The context it appears in
-- Its significance or implications
-
-Format the response as a JSON object with this structure:
-{
-  "summary": "string",
-  "keyTerms": [{ "term": "string", "explanation": "string" }],
-  "mainConcepts": [{ "title": "string", "description": "string" }],
-  "keyPoints": ["string"],
-  "numericalData": [{ "value": "string", "context": "string", "significance": "string" }]
-}
-
-Document content:
-${textContent}`;
+      const prompt = getPromptForDocumentType(documentType, textContent);
 
       const response = await openai.chat.completions.create({
         model: "gpt-4-turbo-preview",
