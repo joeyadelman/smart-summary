@@ -2,7 +2,7 @@
 
 A powerful web application that transforms documents into intelligent, organized summaries using AI. The application processes documents differently based on their type (Academic Papers, Resumes, or General Documents) to provide the most relevant analysis.
 
-## 🚀 Features
+## Features
 
 - **Smart Document Processing**: Upload PDFs or text files for instant AI-powered analysis
 - **Document Type Specialization**: 
@@ -16,7 +16,7 @@ A powerful web application that transforms documents into intelligent, organized
   - Numerical Data
   - Document-specific insights
 
-## 💡 How It Works
+## How It Works
 
 1. **Select Document Type**
    - Choose between Academic Paper, Resume, or General Document
@@ -37,7 +37,7 @@ A powerful web application that transforms documents into intelligent, organized
    - Easy sharing and export options
    - Access to previous summaries
 
-## 🔧 Technical Stack
+## Technical Stack
 
 - Next.js 13+ with App Router
 - TypeScript for type safety
@@ -45,7 +45,7 @@ A powerful web application that transforms documents into intelligent, organized
 - Tailwind CSS for styling
 - GPT-4 for document analysis
 
-## 🚀 Getting Started
+## Getting Started
 
 1. Clone the repository
 2. Install dependencies:
@@ -63,14 +63,10 @@ A powerful web application that transforms documents into intelligent, organized
    npm run dev
    ```
 
-## 📋 Future Enhancements
+## Future Enhancements
 
 - Additional document type specializations
 - Enhanced export options
 - Collaborative features
 - Custom AI analysis parameters
 - Advanced sharing capabilities
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
